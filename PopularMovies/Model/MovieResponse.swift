@@ -8,33 +8,56 @@
 import UIKit
 
 public struct MoviesResponse: Codable {
-    public let page: Int
-    public let totalResults: Int
-    public let totalPages: Int
-    public let results: [Movie]
+    public let page: Int?
+    public let totalResults: Int?
+    public let totalPages: Int?
+    public let results: [Movie]?
+    
+    enum CodingKeys: String, CodingKey {
+           case page, results
+           case totalPages = "total_pages"
+           case totalResults = "total_results"
+       }
 }
 
-public struct Movie {
+public struct Movie: Codable {
     
-    public let id: Int
-    public let title: String
-    public let posterPath: String?
-    public let overview: String
+    let adult: Bool?
+    let backdropPath: String?
+    let genreIDS: [Int]?
+    let id: Int?
+    let originalLanguage: String?
+    let originalTitle, overview: String?
+    let popularity: Double?
+    let posterPath, releaseDate, title: String?
+    let video: Bool?
+    let voteAverage: Double?
+    let voteCount: Int?
     
-    public var downloadedImages: UIImage?
-    public var posterURL: String {
+    enum CodingKeys: String, CodingKey {
+        case adult
+        case backdropPath = "backdrop_path"
+        case genreIDS = "genre_ids"
+        case id
+        case originalLanguage = "original_language"
+        case originalTitle = "original_title"
+        case overview, popularity
+        case posterPath = "poster_path"
+        case releaseDate = "release_date"
+        case title, video
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+    }
+    public var posterURL: String? {
         return "https://image.tmdb.org/t/p/w500\(posterPath ?? "")"
     }
 }
 
-extension Movie: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title
-        case posterPath
-        case overview
-    }
-}
+//enum OriginalLanguage: String, Codable {
+//    case en = "en"
+//    case es = "es"
+//    case ja = "ja"
+//}
 
 public struct MovieGenre: Codable {
     let name: String

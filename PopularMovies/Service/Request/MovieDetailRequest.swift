@@ -1,24 +1,24 @@
 //
-//  PopularMovieRequest.swift
+//  MovieDetailRequest.swift
 //  PopularMovies
 //
-//  Created by Tifo Audi Alif Putra on 11/08/21.
+//  Created by Asif Khan on 26/06/2023.
 //
 
 import Foundation
 
-struct PopularMovieRequest: DataRequest {
+struct MovieDetailRequest: DataRequest {
     
     private let apiKey: String = "020e7b126f0ee278311159ff7dd3028c"
-    internal var page: Int = 1
+    internal var path: String = ""
     
-    init(page: Int) {
-        self.page = page
+    init(path: String) {
+        self.path = path
     }
     
     var url: String {
-        let baseURL: String = "https://api.themoviedb.org/3"
-        let path: String = "/movie/popular"
+        let baseURL: String = "https://api.themoviedb.org"
+        let path: String = "/3/movie/"
         return baseURL + path
     }
     
@@ -27,13 +27,12 @@ struct PopularMovieRequest: DataRequest {
     }
     
     var pathParam: String {
-        ""
+        path
     }
     
     var queryItems: [String : String] {
         [
-            "api_key": apiKey,
-            "page" : "\(page)"
+            "api_key": apiKey
         ]
     }
     
@@ -41,14 +40,14 @@ struct PopularMovieRequest: DataRequest {
         .get
     }
     
-    func decode(_ data: Data) throws -> MoviesResponse {
+    func decode(_ data: Data) throws -> MovieDetail {
         let decoder = JSONDecoder()
 //        decoder.keyDecodingStrategy = .convertFromSnakeCase
 //        let dateFormatter = DateFormatter()
 //        dateFormatter.dateFormat = "yyyy-mm-dd"
 //        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-//        
-        let response = try decoder.decode(MoviesResponse.self, from: data)
+//
+        let response = try decoder.decode(MovieDetail.self, from: data)
         return response
     }
 }

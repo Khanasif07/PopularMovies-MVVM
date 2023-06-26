@@ -12,6 +12,7 @@ protocol PopularMovieListViewModel: AnyObject {
     var onFetchMovieSucceed: (() -> Void)? { set get }
     var onFetchMovieFailure: ((Error) -> Void)? { set get }
     func fetchMovie(page: Int,loader: Bool,pagination: Bool)
+    func fetchMovieDetail(path: String)
     //
     var hideLoader: Bool { set get }
     var currentPage: Int { set get }
@@ -30,6 +31,7 @@ final class PopularMovieListDefaultViewModel: PopularMovieListViewModel {
     }
     
     var movies: [Movie] = []
+    var movieDetail: MovieDetail?
     var onFetchMovieSucceed: (() -> Void)?
     var onFetchMovieFailure: ((Error) -> Void)?
     //Pagination
@@ -42,6 +44,21 @@ final class PopularMovieListDefaultViewModel: PopularMovieListViewModel {
         return hideLoader ? false : nextPageAvailable
     }
    //
+    
+    
+    func fetchMovieDetail(path: String) {
+        let request = MovieDetailRequest(path: path)
+        networkService.request(request) { [weak self] result in
+            switch result {
+            case .success(let movies):
+                self?.movieDetail = movies
+                self?.onFetchMovieSucceed?()
+                print("====success response:-\(movies)====")
+            case .failure(let error):
+                self?.onFetchMovieFailure?(error)
+            }
+        }
+    }
     
     func fetchMovie(page: Int,loader: Bool,pagination: Bool) {
         //
@@ -65,22 +82,26 @@ final class PopularMovieListDefaultViewModel: PopularMovieListViewModel {
     }
     
     internal func paginationLogic(page: Int,loader: Bool,pagination: Bool,response: MoviesResponse ){
-        if response.results.isEmpty {
+        if response.results?.isEmpty ?? true {
             self.hideLoader = true
             self.movies = []
             self.isRequestinApi = false
             self.onFetchMovieSucceed?()
             return
         }
-        self.currentPage = response.page
+        self.currentPage = response.page ?? 0
         self.nextPageAvailable = self.currentPage < self.totalPages
         if self.currentPage == 1 {
-            self.movies = response.results
+            self.movies = response.results ?? []
         } else {
-            self.movies.append(contentsOf: response.results)
+            if let results  = response.results {
+                self.movies.append(contentsOf: results)
+            }
         }
+        
+        print("====success response:-\(response)====")
         self.currentPage += 1
-        self.totalPages = response.totalPages
+        self.totalPages = response.totalPages ?? 0
         self.isRequestinApi = false
         self.onFetchMovieSucceed?()
     }

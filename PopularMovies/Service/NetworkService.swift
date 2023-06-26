@@ -35,6 +35,11 @@ final class DefaultNetworkService: NetworkService {
         
         urlComponent.queryItems = queryItems
         
+        if request.pathParam != "" && !request.pathParam.isEmpty{
+            let path   = urlComponent.path
+            urlComponent.path = path + "\(request.pathParam)"
+        }
+        
         guard let url = urlComponent.url else {
             let error = NSError(
                 domain: ErrorResponse.invalidEndpoint.rawValue,
@@ -63,6 +68,7 @@ final class DefaultNetworkService: NetworkService {
             }
             
             do {
+                print(url)
                 try completion(.success(request.decode(data)))
             } catch let error as NSError {
                 completion(.failure(error))

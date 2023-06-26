@@ -86,7 +86,8 @@ extension ImageClient: ImageClientService {
                 }
                 
                 guard let image = image else {
-                    print(error?.localizedDescription)
+//                    let error = NSError(domain: "", code: 101, userInfo: [ NSLocalizedDescriptionKey: error?.localizedDescription ?? ""])
+//                    print(error)
                     return
                 }
                 

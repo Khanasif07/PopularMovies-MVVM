@@ -87,5 +87,11 @@ final class PopularMovieListViewController: UITableViewController {
             })
         }
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let id = self.viewModel.movies[indexPath.item].id{
+            self.viewModel.fetchMovieDetail(path: String(id))
+        }
+    }
 }
 
