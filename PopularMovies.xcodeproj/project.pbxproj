@@ -204,9 +204,9 @@
 		E09984B026C4101E00C9B4CF /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				E0136C002A4955B7003947B6 /* MovieDetailRequest.swift */,
 				E09984B126C4102E00C9B4CF /* PopularMovieRequest.swift */,
 				E09984B526C41C0800C9B4CF /* ImageRequest.swift */,
-				E0136C002A4955B7003947B6 /* MovieDetailRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";

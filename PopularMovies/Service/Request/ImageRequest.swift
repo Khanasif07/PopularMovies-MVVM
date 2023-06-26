@@ -11,6 +11,10 @@ struct ImageRequest: DataRequest {
     
     let url: String
     
+    var pathParam: String{
+        ""
+    }
+    
     var method: HTTPMethod {
         .get
     }

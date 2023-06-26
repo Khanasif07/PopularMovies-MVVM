@@ -74,8 +74,43 @@ final class PopularMovieCell: UITableViewCell {
         
         titleLabel.text = movie.title
         overviewLabel.text = movie.overview
-//        ImageClient.shared.setImage(from: movie.posterURL ?? "", placeholderImage: nil) { [weak self] image in
-//            self?.movieImageView.image = image
-//        }
+//        movieImageView.setImageFromUrl(ImageURL: movie.posterURL ?? "")
+        ImageClient.shared.setImage(from: movie.posterURL ?? "", placeholderImage: UIImage(systemName: "cloud")) { [weak self] image in
+            self?.movieImageView.image = image
+        }
+    }
+}
+
+extension UIImageView{
+    func setImageFromUrl(ImageURL:String) {
+        
+        guard let url = URL(string: ImageURL) else {
+            
+            self.image = UIImage(named: "ogimage-hidubai")!
+            
+            return
+            
+        }
+        
+        URLSession.shared.dataTask(with: url, completionHandler: {
+            
+            (data, response, error) -> Void in
+            
+            DispatchQueue.main.async {
+                
+                if let data = data {
+                    
+                    self.image = UIImage(data: data)
+                    
+                }else{
+                    
+                    self.image = UIImage(named: "ogimage-hidubai")!
+                    
+                }
+                
+            }
+            
+        }).resume()
+        
     }
 }
