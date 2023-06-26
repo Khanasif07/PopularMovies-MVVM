@@ -8,6 +8,7 @@
 import Foundation
 
 protocol PopularMovieListViewModel: AnyObject {
+    //MARK: - Computed property
     var movies: [Movie] { set get }
     var onFetchMovieSucceed: (() -> Void)? { set get }
     var onFetchMovieFailure: ((Error) -> Void)? { set get }
@@ -43,7 +44,6 @@ final class PopularMovieListDefaultViewModel: PopularMovieListViewModel {
     func showPaginationLoader() -> Bool {
         return hideLoader ? false : nextPageAvailable
     }
-   //
     
     
     func fetchMovieDetail(path: String) {
@@ -61,14 +61,12 @@ final class PopularMovieListDefaultViewModel: PopularMovieListViewModel {
     }
     
     func fetchMovie(page: Int,loader: Bool,pagination: Bool) {
-        //
         if pagination {
             guard nextPageAvailable, !isRequestinApi else { return }
         } else {
             guard !isRequestinApi else { return }
         }
         isRequestinApi = true
-        //
         let request = PopularMovieRequest(page: page)
         networkService.request(request) { [weak self] result in
             switch result {

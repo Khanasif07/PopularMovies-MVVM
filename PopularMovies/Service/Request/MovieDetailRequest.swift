@@ -42,11 +42,6 @@ struct MovieDetailRequest: DataRequest {
     
     func decode(_ data: Data) throws -> MovieDetail {
         let decoder = JSONDecoder()
-//        decoder.keyDecodingStrategy = .convertFromSnakeCase
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-mm-dd"
-//        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-//
         let response = try decoder.decode(MovieDetail.self, from: data)
         return response
     }

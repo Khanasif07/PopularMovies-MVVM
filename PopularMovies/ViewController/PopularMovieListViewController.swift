@@ -70,12 +70,7 @@ final class PopularMovieListViewController: UITableViewController {
             }
             
             let movie = viewModel.movies[indexPath.row]
-            cell.bindViewWith(
-                viewModel: PopularMovieDefaultViewModel(
-                    movie: movie
-                )
-            )
-            
+            cell.bindViewWith(viewModel: PopularMovieDefaultViewModel(movie: movie))
             return cell
         }
     }

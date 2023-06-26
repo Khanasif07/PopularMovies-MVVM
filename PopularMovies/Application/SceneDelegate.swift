@@ -22,11 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let viewModel: PopularMovieListViewModel = PopularMovieListDefaultViewModel(networkService: DefaultNetworkService())
         
-        window?.rootViewController = UINavigationController(
-            rootViewController: PopularMovieListViewController(
-                viewModel: viewModel
-            )
-        )
+        window?.rootViewController = UINavigationController(rootViewController: PopularMovieListViewController(viewModel: viewModel))
         
         window?.makeKeyAndVisible()
     }
