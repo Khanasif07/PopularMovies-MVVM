@@ -114,3 +114,38 @@ extension UIImageView{
         
     }
 }
+
+
+//struct ImageFetcher {
+//    func fetchImages() async throws -> [UIImage] {
+//        // .. perform data request
+//    }
+//}
+
+//struct ImageFetcher {
+//    @available(*, renamed: "fetchImages()")
+//    func fetchImages(completion: @escaping (Result<[UIImage], Error>) -> Void) {
+//        Task {
+//            do {
+//                let result = try await fetchImages()
+//                completion(.success(result))
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }
+//    }
+//
+//
+//    func fetchImages() async throws -> [UIImage] {
+//        // .. perform data request
+//    }
+//
+//    func fetchImage(completion: @escaping (([String])->Void)){
+//        completion([])
+//    }
+//
+//    func fetchImagee(completion: @escaping (Result<[String],Error>) -> Void){
+//        completion(.success(let arr))
+//        completion(.failure(err))
+//    }
+//}
